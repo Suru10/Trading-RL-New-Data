@@ -37,7 +37,36 @@ saving = True
 # Variable related to the fictive stocks supported
 fictiveStocks = ('LINEARUP', 'LINEARDOWN', 'SINUSOIDAL', 'TRIANGLE')
 
+def properCSV(marketSymbol):
+    pathfile = "/content/Data/" + marketSymbol + ".csv"
+    df = pd.read_csv(pathfile)
 
+# Renaming columns
+    df.rename(columns={
+        'Close/Last': 'Close',
+        'Open': 'Open',
+        'High': 'High',
+        'Low': 'Low',
+        'Volume': 'Volume'
+    }, inplace=True)
+
+    # Converting the 'Date' to datetime and reformatting
+    df['Date'] = pd.to_datetime(df['Date']).dt.strftime('%Y-%m-%d')
+    df['Timestamp'] = df['Date']
+    df.drop('Date', axis=1, inplace=True)
+
+    # Removing the dollar sign and converting to float
+    df['Close'] = df['Close'].replace('[\$,]', '', regex=True).astype(float)
+    df['Open'] = df['Open'].replace('[\$,]', '', regex=True).astype(float)
+    df['High'] = df['High'].replace('[\$,]', '', regex=True).astype(float)
+    df['Low'] = df['Low'].replace('[\$,]', '', regex=True).astype(float)
+
+    # Reordering columns
+    df = df[['Timestamp', 'Open', 'High', 'Low', 'Close', 'Volume']]
+
+    # Output to CSV (You can specify a path to save the file)
+    # print(df)
+    return df
 
 ###############################################################################
 ############################## Class TradingEnv ###############################
@@ -100,7 +129,10 @@ class TradingEnv(gym.Env):
         else:
             # Check if the stock market data is already present in the database
             csvConverter = CSVHandler()
-            csvName = "".join(['/content/Trading-RL/Data/', marketSymbol, '_', startingDate, '_', endingDate])
+
+            
+
+            csvName = "".join(['/content/Data/', marketSymbol, '_', startingDate, '_', endingDate])
             exists = os.path.isfile(csvName + '.csv')
             
             # If affirmative, load the stock market data from the database
@@ -108,15 +140,26 @@ class TradingEnv(gym.Env):
                 self.data = csvConverter.CSVToDataframe(csvName)
             # Otherwise, download the stock market data from Yahoo Finance and save it in the database
             else:  
-                downloader1 = YahooFinance()
-                downloader2 = AlphaVantage()
-                try:
-                    self.data = downloader1.getDailyData(marketSymbol, startingDate, endingDate)
-                except:
-                    self.data = downloader2.getDailyData(marketSymbol, startingDate, endingDate)
+                data = properCSV(marketSymbol)
+                # Creating a new DataFrame based on the date range
+                print('\n\n starting', startingDate)
+                print('\n end', endingDate)
+                data = data[(data['Timestamp'] >= startingDate) & (data['Timestamp'] <= endingDate)]
 
-                if saving == True:
-                    csvConverter.dataframeToCSV(csvName, self.data)
+                # Displaying the filtered DataFrame
+                # print(filtered_df)
+
+                # downloader1 = YahooFinance()
+                # downloader2 = AlphaVantage()
+                # try:
+                #     self.data = downloader1.getDailyData(marketSymbol, startingDate, endingDate)
+                # except:
+                #     self.data = downloader2.getDailyData(marketSymbol, startingDate, endingDate)
+
+                # if saving == True:
+                # print(self.data.columns)
+                csvConverter.dataframeToCSV(csvName, data)
+                self.data = csvConverter.CSVToDataframe(csvName)
 
         # Interpolate in case of missing data
         self.data.replace(0.0, np.nan, inplace=True)
