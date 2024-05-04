@@ -319,7 +319,7 @@ class TradingSimulator:
         # Generation of the two legends and plotting
         ax1.legend(["Price", "Long",  "Short", "Train/Test separation"])
         ax2.legend(["Capital", "Long", "Short", "Train/Test separation"])
-        plt.savefig(''.join(['/content/Trading-RL/Figures/', str(trainingEnv.marketSymbol), '_TrainingTestingRendering', '.png'])) 
+        plt.savefig(''.join(['/content/Trading-RL-New-Data/Figures/', str(trainingEnv.marketSymbol), '_TrainingTestingRendering', '.png'])) 
         #plt.show()
 
 
@@ -438,7 +438,7 @@ class TradingSimulator:
 
         # If required, save the trading strategy with Pickle
         if(saveStrategy):
-            fileName = "".join(["/content/Trading-RL/Strategies/", strategy, "_", stock, "_", startingDate, "_", splitingDate])
+            fileName = "".join(["/content/Trading-RL-New-Data/Strategies/", strategy, "_", stock, "_", startingDate, "_", splitingDate])
             if ai:
                 tradingStrategy.saveModel(fileName)
             else:
@@ -521,7 +521,7 @@ class TradingSimulator:
         # 2. LOADING PHASE    
 
         # Check that the strategy to load exists in the strategy dataset
-        fileName = "".join(["/content/Trading-RL/Strategies/", strategy, "_", stock, "_", startingDate, "_", splitingDate])
+        fileName = "".join(["/content/Trading-RL-New-Data/Strategies/", strategy, "_", stock, "_", startingDate, "_", splitingDate])
         exists = os.path.isfile(fileName)
         # If affirmative, load the trading strategy
         if exists:

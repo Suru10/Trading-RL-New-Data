@@ -439,7 +439,7 @@ class TradingEnv(gym.Env):
         # Generation of the two legends and plotting
         ax1.legend(["Price", "Long",  "Short"])
         ax2.legend(["Capital", "Long", "Short"])
-        plt.savefig(''.join(['/content/Trading-RL/Figures/', str(self.marketSymbol), '_Rendering', '.png']))
+        plt.savefig(''.join(['/content/Trading-RL-New-Data/Figures/', str(self.marketSymbol), '_Rendering', '.png']))
         #plt.show()
 
 

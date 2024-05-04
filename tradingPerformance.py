@@ -203,7 +203,7 @@ class PerformanceEstimator:
                      [capital[peak], capital[through]], 'o', color='Red', markersize=5)
             plt.xlabel('Time')
             plt.ylabel('Price')
-            plt.savefig(''.join(['/content/Trading-RL/Figures/', 'MaximumDrawDown', '.png']))
+            plt.savefig(''.join(['/content/Trading-RL-New-Data/Figures/', 'MaximumDrawDown', '.png']))
             #plt.show()
 
         # Return of the results

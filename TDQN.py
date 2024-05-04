@@ -378,7 +378,7 @@ class TDQN:
         self.iterations = 0
 
         # Initialization of the tensorboard writer
-        self.writer = SummaryWriter('/content/Trading-RL/runs/' + datetime.datetime.now().strftime("%d/%m/%Y-%H:%M:%S"))
+        self.writer = SummaryWriter('/content/Trading-RL-New-Data/runs/' + datetime.datetime.now().strftime("%d/%m/%Y-%H:%M:%S"))
 
     
     def getNormalizationCoefficients(self, tradingEnv):
@@ -764,7 +764,7 @@ class TDQN:
             ax.plot(performanceTrain)
             ax.plot(performanceTest)
             ax.legend(["Training", "Testing"])
-            plt.savefig(''.join(['/content/Trading-RL/Figures/', str(marketSymbol), '_TrainingTestingPerformance', '.png']))
+            plt.savefig(''.join(['/content/Trading-RL-New-Data/Figures/', str(marketSymbol), '_TrainingTestingPerformance', '.png']))
             #plt.show()
             for i in range(len(trainingEnvList)):
                 self.plotTraining(score[i][:episode], marketSymbol)
@@ -851,7 +851,7 @@ class TDQN:
         fig = plt.figure()
         ax1 = fig.add_subplot(111, ylabel='Total reward collected', xlabel='Episode')
         ax1.plot(score)
-        plt.savefig(''.join(['/content/Trading-RL/Figures/', str(marketSymbol), 'TrainingResults', '.png']))
+        plt.savefig(''.join(['/content/Trading-RL-New-Data/Figures/', str(marketSymbol), 'TrainingResults', '.png']))
         #plt.show()
 
     
@@ -871,7 +871,7 @@ class TDQN:
         ax1.plot(QValues0)
         ax1.plot(QValues1)
         ax1.legend(['Short', 'Long'])
-        plt.savefig(''.join(['/content/Trading-RL/Figures/', str(marketSymbol), '_QValues', '.png']))
+        plt.savefig(''.join(['/content/Trading-RL-New-Data/Figures/', str(marketSymbol), '_QValues', '.png']))
         #plt.show()
 
 
@@ -1018,7 +1018,7 @@ class TDQN:
             ax.plot([performanceTrain[e][i] for e in range(trainingParameters[0])])
             ax.plot([performanceTest[e][i] for e in range(trainingParameters[0])])
             ax.legend(["Training", "Testing"])
-            plt.savefig(''.join(['/content/Trading-RL/Figures/', str(marketSymbol), '_TrainingTestingPerformance', str(i+1), '.png']))
+            plt.savefig(''.join(['/content/Trading-RL-New-Data/Figures/', str(marketSymbol), '_TrainingTestingPerformance', str(i+1), '.png']))
             #plt.show()
 
         # Plot the expected performance of the intelligent DRL trading agent
@@ -1029,7 +1029,7 @@ class TDQN:
         ax.fill_between(range(len(expectedPerformanceTrain)), expectedPerformanceTrain-stdPerformanceTrain, expectedPerformanceTrain+stdPerformanceTrain, alpha=0.25)
         ax.fill_between(range(len(expectedPerformanceTest)), expectedPerformanceTest-stdPerformanceTest, expectedPerformanceTest+stdPerformanceTest, alpha=0.25)
         ax.legend(["Training", "Testing"])
-        plt.savefig(''.join(['/content/Trading-RL/Figures/', str(marketSymbol), '_TrainingTestingExpectedPerformance', '.png']))
+        plt.savefig(''.join(['/content/Trading-RL-New-Data/Figures/', str(marketSymbol), '_TrainingTestingExpectedPerformance', '.png']))
         #plt.show()
 
         # Closing of the tensorboard writer
@@ -1077,5 +1077,5 @@ class TDQN:
         plt.plot([self.epsilonValue(i) for i in range(10*epsilonDecay)])
         plt.xlabel("Iterations")
         plt.ylabel("Epsilon value")
-        plt.savefig(''.join(['/content/Trading-RL/Figures/', 'EpsilonAnnealing', '.png']))
+        plt.savefig(''.join(['/content/Trading-RL-New-Data/Figures/', 'EpsilonAnnealing', '.png']))
         #plt.show()
