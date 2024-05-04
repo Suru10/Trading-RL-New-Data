@@ -38,7 +38,7 @@ saving = True
 fictiveStocks = ('LINEARUP', 'LINEARDOWN', 'SINUSOIDAL', 'TRIANGLE')
 
 def properCSV(marketSymbol):
-    pathfile = "/content/Data/" + marketSymbol + ".csv"
+    pathfile = "/content/Trading-RL-New-Data/Data/" + marketSymbol + ".csv"
     df = pd.read_csv(pathfile)
 
 # Renaming columns
@@ -132,7 +132,7 @@ class TradingEnv(gym.Env):
 
             
 
-            csvName = "".join(['/content/Data/', marketSymbol, '_', startingDate, '_', endingDate])
+            csvName = "".join(['/content/Trading-RL-New-Data/Data/', marketSymbol, '_', startingDate, '_', endingDate])
             exists = os.path.isfile(csvName + '.csv')
             
             # If affirmative, load the stock market data from the database
